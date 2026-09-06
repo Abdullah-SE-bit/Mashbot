@@ -1,0 +1,16 @@
+-- Optional convenience seed for manual/system-level test execution.
+-- Run AFTER registering the referenced users through the app's /register page
+-- (Supabase Auth users cannot be created by raw SQL insert alone).
+--
+-- Example: promote a test account to System Administrator so you can exercise
+-- Part 3 test cases without hand-editing every account through the SQL editor.
+--
+-- update public.profiles set account_type = 'admin' where email = 'admin@example.com';
+
+-- Example: grant a second test account the approver + publisher roles so the
+-- full Contributor -> Approver -> Publisher workflow (SRS 0140-0230) can be
+-- exercised end-to-end in one browser session using two logins.
+--
+-- update public.profiles
+-- set roles = array['approver', 'publisher']
+-- where email = 'reviewer@example.com';
