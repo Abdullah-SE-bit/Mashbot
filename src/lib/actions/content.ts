@@ -148,7 +148,10 @@ export async function scheduleContent(
   }
 
   const date = String(formData.get("scheduled_date") ?? "").trim();
-  const time = String(formData.get("scheduled_time") ?? "").trim() || "00:00";
+  const now = new Date();
+  const time =
+    String(formData.get("scheduled_time") ?? "").trim() ||
+    `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
 
   if (!date) {
     return { success: false, message: "A go-live date is required." };

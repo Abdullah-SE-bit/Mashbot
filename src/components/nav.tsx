@@ -29,6 +29,12 @@ export function Nav({ profile }: { profile: Profile }) {
           </nav>
         </div>
         <div className="flex items-center gap-3 text-sm text-zinc-600">
+          {/* Notification bell — parked until SRS use case 35 (activity notifications) is built.
+          <button type="button" className="relative">
+            <BellIcon />
+            {unreadCount > 0 && <span className="badge">{unreadCount}</span>}
+          </button>
+          */}
           <span>
             {profile.name} · {profile.roles.join(", ") || "no roles"}
           </span>
