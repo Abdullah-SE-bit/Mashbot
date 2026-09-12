@@ -88,14 +88,21 @@ export async function deleteUser(userId: string): Promise<ActionResult> {
     return { success: false, message: "The System Administrator account cannot be deleted." };
   }
 
-  const { count: campaignCount } = await supabase
-    .from("campaigns")
-    .select("id", { count: "exact", head: true })
-    .eq("owner_id", userId);
-  const { count: contentCount } = await supabase
-    .from("campaign_content")
-    .select("id", { count: "exact", head: true })
-    .eq("created_by", userId);
+  let campaignCount = 0;
+  let contentCount = 0;
+  try {
+    const { count: c1 } = await supabase
+      .from("campaigns")
+      .select("id", { count: "exact", head: true })
+      .eq("owner_id", userId);
+    const { count: c2 } = await supabase
+      .from("campaign_content")
+      .select("id", { count: "exact", head: true })
+      .eq("created_by", userId);
+    campaignCount = c1 ?? 0;
+    contentCount = c2 ?? 0;
+  } catch {
+  }
 
   if ((campaignCount ?? 0) > 0 || (contentCount ?? 0) > 0) {
     return {

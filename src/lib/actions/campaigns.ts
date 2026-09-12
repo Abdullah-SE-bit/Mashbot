@@ -50,9 +50,6 @@ export async function updateCampaign(
   if (!name) {
     return { success: false, message: "Campaign name is required." };
   }
-  if (startDate && endDate && endDate < startDate) {
-    return { success: false, message: "End date cannot be before the start date." };
-  }
 
   const supabase = await createClient();
   const { error } = await supabase

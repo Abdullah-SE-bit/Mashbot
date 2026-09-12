@@ -1,5 +1,10 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+
+// TODO: replace these placeholder counts with the real analytics dashboard
+// (clickthrough rate / page views / comments) described in SRS 4.1 once the
+// Explore view is implemented.
 
 export default async function DashboardPage() {
   const supabase = await createClient();

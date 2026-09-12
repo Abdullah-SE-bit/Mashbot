@@ -10,6 +10,7 @@ import {
   submitForApproval,
 } from "@/lib/actions/content";
 import type { CampaignContent, Profile } from "@/lib/types";
+import { describeContentStatus } from "@/lib/statusHelpers";
 
 export function ContentItem({
   content,
@@ -28,10 +29,14 @@ export function ContentItem({
     <li className="flex flex-col gap-3 rounded-lg border border-zinc-200 bg-white p-4">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <StatusBadge status={content.status} />
-          <p className="mt-2 text-sm">
-            {content.content_type === "text" ? content.body : content.image_url}
-          </p>
+          <span title={describeContentStatus(content.status, profile.roles, isAuthor)}>
+            <StatusBadge status={content.status} />
+          </span>
+          {content.content_type === "text" ? (
+            <p className="mt-2 text-sm" dangerouslySetInnerHTML={{ __html: content.body ?? "" }} />
+          ) : (
+            <p className="mt-2 text-sm">{content.image_url}</p>
+          )}
           {content.scheduled_at && (
             <p className="mt-1 text-xs text-zinc-500">
               Go-live: {new Date(content.scheduled_at).toLocaleString()}
